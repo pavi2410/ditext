@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.0.18",
+    "diff": "^5.2.0",
+    "primevue": "4.0.0-beta.3",
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@types/diff": "^5.2.1",
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",

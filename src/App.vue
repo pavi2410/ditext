@@ -1,30 +1,60 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { computed, ref } from 'vue'
+import { diffChars, diffLines, diffWords } from 'diff'
+import TextInput from './components/TextInput.vue'
+import SelectButton from 'primevue/selectbutton'
+import Checkbox from 'primevue/checkbox'
+
+const textA = ref('detect\ndiff text')
+const textB = ref('ditext\nditext')
+
+const strategy = ref('char')
+const ignoreCase = ref(false)
+
+const diff = computed(() => {
+  const options = {
+    ignoreCase: ignoreCase.value
+  }
+
+  if (strategy.value === 'line') {
+    return diffLines(textA.value, textB.value, options)
+  }
+  if (strategy.value === 'word') {
+    return diffWords(textA.value, textB.value, options)
+  }
+  return diffChars(textA.value, textB.value, options)
+})
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div style="height: 100vh; padding: 8px; display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: row;">
+      <SelectButton v-model="strategy" :options="['char','word','line']" style="margin-bottom: 8px"></SelectButton>
+      <div>
+        <Checkbox v-model="ignoreCase" binary input-id="ignoreCase"></Checkbox>
+        <label for="ignoreCase">Ignore Case</label>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 8px; flex: 1;">
+      <TextInput v-model="textA" style="height: 100%; flex: 1"></TextInput>
+      <TextInput v-model="textB" style="height: 100%; flex: 1"></TextInput>
+      <div style="height: 100%; flex: 1; white-space: pre; overflow-x: scroll; border: 1px solid #eee3; border-radius: 8px; padding: 8px;">
+        <code>
+          <span v-for="part in diff" :style="{ backgroundColor: part.added ? '#0f07' : part.removed ? '#f007' : 'transparent' }">
+            {{ part.value }}
+          </span>
+        </code>
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+html {
+  font-family: 'Inter Variable', sans-serif;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

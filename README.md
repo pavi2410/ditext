@@ -1,9 +1,29 @@
-# Vue 3 + TypeScript + Vite
+# ditext
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```diff
+- detect
++ ditext
+```
 
-## Recommended Setup
+```diff
+- diff text
++ ditext
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## Goal
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+The goal of this project is to build a end-to-end solution for quick and dirty diffing needs. The project will eventually support multiple file types such as raw binary files, images (onion skin), JSON, code (using [difftastic](https://github.com/Wilfred/difftastic)).
+
+In future, I intend to add a feature to merge two conflicting files with ease. This feature is inspired by the IntelliJ's merge editor.
+
+I may also experiment with AI assisted diff interpretation.
+
+| input A | input B | output |
+| --- | --- | --- |
+| plain text | plain text | diff |
+| plain text | patch | merged text |
+| patch | patch | merge editor |
+
+## Credits
+
+- https://www.npmjs.com/package/diff
